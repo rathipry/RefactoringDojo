@@ -60,4 +60,10 @@ public class Customer {
 
         return result;
     }
+
+
+    public void incrementFrequentPointers()
+    {
+
+    }
 }
