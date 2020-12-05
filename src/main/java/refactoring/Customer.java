@@ -29,25 +29,17 @@ public class Customer {
             double amount = 0;
             switch (rental.getMovie().getPriceCode()) {
                 case Movie.REGULAR:
-                    amount += 2;
-                    if (rental.getDaysRented() > 2)
-                        amount += (rental.getDaysRented() - 2) * 1.5;
+                    amount += calculateRegularMovieAmount(rental);
                     break;
                 case Movie.NEW_RELEASE:
-                    amount += rental.getDaysRented() * 3;
+                    amount += calculateNewReleaseMovieAmount(rental);
                     break;
                 case Movie.CHILDREN:
-                    amount += 1.5;
-                    if (rental.getDaysRented() > 3)
-                        amount += (rental.getDaysRented() - 3) * 1.5;
+                    amount += calculateChildrenMovieAmount(rental);
                     break;
             }
 
-            // add frequent renter points
-            frequentRenterPoints++;
-            // add bonus for a two day new release rental
-            if (rental.getMovie().getPriceCode() == Movie.NEW_RELEASE && rental.getDaysRented() > 1)
-                frequentRenterPoints++;
+            frequentRenterPoints += getFrequentRenterPoints(rental);
 
             // show figures for this rental
             result += "\t" + rental.getMovie().getTitle() + "\t" + String.valueOf(amount) + "\n";
@@ -59,6 +51,29 @@ public class Customer {
         result += "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points";
 
         return result;
+    }
+
+
+    public double calculateRegularMovieAmount(Rental rental) {
+        if(rental.getDaysRented() <= 2)
+            return 2;
+        return 2 + ((rental.getDaysRented() - 2) * 1.5);
+    }
+
+    public double calculateNewReleaseMovieAmount(Rental rental) {
+        return rental.getDaysRented() * 3;
+    }
+
+    public double calculateChildrenMovieAmount(Rental rental) {
+        if(rental.getDaysRented() <= 3)
+            return 1.5;
+        return 1.5 + ((rental.getDaysRented() - 3) * 1.5);
+    }
+
+    public int getFrequentRenterPoints(Rental rental) {
+        if (rental.getMovie().getPriceCode() == Movie.NEW_RELEASE && rental.getDaysRented() > 1)
+            return 2;
+        return 1;
     }
 
 
