@@ -7,12 +7,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CustomerTest {
 
-    private final String name = "sushi";
     private Customer customer;
 
     @BeforeEach
     public void setup() {
-        customer = new Customer(name);
+        customer = new Customer("sushi");
     }
 
 
@@ -23,7 +22,7 @@ public class CustomerTest {
     }
 
     @Test
-    public void testStatmentForOneRentalWith0RegularMovie() {
+    public void testStatementForOneRentalWith0RegularMovie() {
         Rental rental = new Rental(new Movie("MP3", Movie.REGULAR), 1);
         customer.addRental(rental);
         String expectedStatement = "Rental record for " + customer.getName()  +"\n\t" + rental.getMovie().getTitle()+"\t2.0\n"
@@ -32,7 +31,7 @@ public class CustomerTest {
     }
 
     @Test
-    public void testStatementForOneRentalwithNewReleaseMovie() {
+    public void testStatementForOneRentalWithNewReleaseMovie() {
         Rental rental = new Rental(new Movie("MP3", Movie.NEW_RELEASE), 1);
         customer.addRental(rental);
         String expectedStatement = "Rental record for " + customer.getName()  +"\n\t" + rental.getMovie().getTitle()+"\t3.0\n"
