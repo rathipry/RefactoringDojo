@@ -24,7 +24,7 @@ public class Customer {
         double totalAmount = 0;
         int frequentRenterPoints = 0;
 
-        String result = "Rental record for " + getName() + "\n";
+        StringBuilder result = formResultString();
         for (Rental rental : rentals) {
             double amount = 0;
             switch (rental.getMovie().getPriceCode()) {
@@ -40,17 +40,28 @@ public class Customer {
             }
 
             frequentRenterPoints += getFrequentRenterPoints(rental);
-
-            // show figures for this rental
-            result += "\t" + rental.getMovie().getTitle() + "\t" + String.valueOf(amount) + "\n";
-
+            result.append(formResultStringWithValues(rental, amount));
             totalAmount += amount;
         }
 
-        result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
-        result += "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points";
+        result.append(formEndResultString(totalAmount, frequentRenterPoints));
+        return String.valueOf(result);
+    }
 
-        return result;
+    private StringBuilder formEndResultString(double totalAmount, int frequentRenterPoints) {
+        return new StringBuilder("Amount owed is ").append(totalAmount)
+                .append("\n").append("You earned ").append(frequentRenterPoints)
+                .append(" frequent renter points");
+    }
+
+    private StringBuilder formResultStringWithValues(Rental rental, double amount) {
+        return new StringBuilder().append("\t")
+                .append(rental.getMovie().getTitle()).append("\t")
+                .append(amount).append("\n");
+    }
+
+    public StringBuilder formResultString() {
+        return new StringBuilder("Rental record for ").append(getName()).append("\n");
     }
 
 
