@@ -8,15 +8,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class RentalTest {
 
     private static final String TITLE = "MP3";
-    private static Movie childrenMovie ;
+    private static Movie childrenMovie;
     private static Movie regularMovie;
     private static Movie newReleaseMovie;
 
     @BeforeAll
     public static void setup() {
-        childrenMovie = new Movie(TITLE, Movie.CHILDREN);
-        regularMovie = new Movie(TITLE, Movie.REGULAR);
-        newReleaseMovie = new Movie(TITLE, Movie.NEW_RELEASE);
+        childrenMovie = new ChildrenMovie(TITLE);
+        regularMovie = new RegularMovie(TITLE);
+        newReleaseMovie = new NewReleaseMovie(TITLE);
     }
 
     @Test

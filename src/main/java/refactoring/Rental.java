@@ -29,21 +29,20 @@ public class Rental {
             return 1.5;
         return 1.5+((daysRented-3) * 1.5);
     }
+
     public int getFrequentRenterPoints() {
-        if (movie.getPriceCode() == Movie.NEW_RELEASE && daysRented > 1)
+        if (movie instanceof NewReleaseMovie && daysRented > 1)
             return 2;
         return 1;
     }
 
     public double calculateAmount() {
-        switch (movie.getPriceCode()) {
-            case Movie.REGULAR:
-                return calculateRegularMovieAmount();
-            case Movie.NEW_RELEASE:
-                return calculateNewReleaseMovieAmount();
-            case Movie.CHILDREN:
-                return calculateChildrenMovieAmount();
-        }
+        if(movie instanceof RegularMovie)
+            return calculateRegularMovieAmount();
+        if(movie instanceof  NewReleaseMovie)
+            return calculateNewReleaseMovieAmount();
+        if(movie instanceof ChildrenMovie)
+            return calculateChildrenMovieAmount();
         return 0;
     }
 }
