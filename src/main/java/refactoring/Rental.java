@@ -14,10 +14,6 @@ public class Rental {
         return movie;
     }
 
-    public int getDaysRented() {
-        return daysRented;
-    }
-
     public double calculateRegularMovieAmount() {
         if(daysRented <= 2)
             return 2;
@@ -40,18 +36,14 @@ public class Rental {
     }
 
     public double calculateAmount() {
-        double amount = 0;
         switch (movie.getPriceCode()) {
             case Movie.REGULAR:
-                amount += calculateRegularMovieAmount();
-                break;
+                return calculateRegularMovieAmount();
             case Movie.NEW_RELEASE:
-                amount += calculateNewReleaseMovieAmount();
-                break;
+                return calculateNewReleaseMovieAmount();
             case Movie.CHILDREN:
-                amount += calculateChildrenMovieAmount();
-                break;
+                return calculateChildrenMovieAmount();
         }
-        return amount;
+        return 0;
     }
 }

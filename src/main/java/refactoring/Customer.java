@@ -24,32 +24,32 @@ public class Customer {
         double totalAmount = 0;
         int frequentRenterPoints = 0;
 
-        StringBuilder result = formStartResultString();
+        StringBuilder result = formInitialStatement();
 
         for (Rental rental : rentals) {
             frequentRenterPoints += rental.getFrequentRenterPoints();
             double amount = rental.calculateAmount();
-            result.append(formResultStringWithValues(rental, amount));
+            result.append(formStatementWithValues(rental, amount));
             totalAmount += amount;
         }
 
-        result.append(formEndResultString(totalAmount, frequentRenterPoints));
+        result.append(formEndStatement(totalAmount, frequentRenterPoints));
         return String.valueOf(result);
     }
 
-    private StringBuilder formEndResultString(double totalAmount, int frequentRenterPoints) {
+    private StringBuilder formEndStatement(double totalAmount, int frequentRenterPoints) {
         return new StringBuilder("Amount owed is ").append(totalAmount)
                 .append("\n").append("You earned ").append(frequentRenterPoints)
                 .append(" frequent renter points");
     }
 
-    private StringBuilder formResultStringWithValues(Rental rental, double amount) {
+    private StringBuilder formStatementWithValues(Rental rental, double amount) {
         return new StringBuilder().append("\t")
                 .append(rental.getMovie().getTitle()).append("\t")
                 .append(amount).append("\n");
     }
 
-    public StringBuilder formStartResultString() {
+    public StringBuilder formInitialStatement() {
         return new StringBuilder("Rental record for ").append(getName()).append("\n");
     }
 
