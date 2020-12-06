@@ -22,7 +22,7 @@ public class CustomerTest {
     }
 
     @Test
-    public void testStatementForOneRentalWith0RegularMovie() {
+    public void testStatementForOneRentalWithRegularAnd1DaysRentedMovie() {
         Rental rental = new Rental(new Movie("MP3", Movie.REGULAR), 1);
         customer.addRental(rental);
         String expectedStatement = "Rental record for " + customer.getName()  +"\n\t" + rental.getMovie().getTitle()+"\t2.0\n"
@@ -31,7 +31,7 @@ public class CustomerTest {
     }
 
     @Test
-    public void testStatementForOneRentalWithNewReleaseMovie() {
+    public void testStatementForOneRentalWithNewReleaseAnd1DaysRentedMovie() {
         Rental rental = new Rental(new Movie("MP3", Movie.NEW_RELEASE), 1);
         customer.addRental(rental);
         String expectedStatement = "Rental record for " + customer.getName()  +"\n\t" + rental.getMovie().getTitle()+"\t3.0\n"
@@ -40,7 +40,7 @@ public class CustomerTest {
     }
 
     @Test
-    public void testStatementForOneRentalWithChildrenMovie() {
+    public void testStatementForOneRentalWithChildrenAnd1DaysRentedMovie() {
         Rental rental = new Rental(new Movie("MP3", Movie.CHILDREN), 1);
         customer.addRental(rental);
         String expectedStatement = "Rental record for " + customer.getName()  +"\n\t" + rental.getMovie().getTitle()+"\t1.5\n"
@@ -58,20 +58,18 @@ public class CustomerTest {
     }
 
     @Test
-    public void testStatementForOneRentalWithNewReleaseAnd3DaysMovie() {
-        Rental rental = new Rental(new Movie("MP3", Movie.NEW_RELEASE), 3);
-        customer.addRental(rental);
-        String expectedStatement = "Rental record for " + customer.getName()  +"\n\t" + rental.getMovie().getTitle()+"\t9.0\n"
-                + "Amount owed is 9.0\nYou earned 2 frequent renter points";
+    public void testStatementForThreeRentalWithEachTypeMoviesFor5RentedDays() {
+        Rental rental1 = new Rental(new Movie("MP1", Movie.REGULAR), 5);
+        Rental rental2 = new Rental(new Movie("MP2", Movie.NEW_RELEASE), 5);
+        Rental rental3 = new Rental(new Movie("MP3", Movie.CHILDREN), 5);
+        customer.addRental(rental1);
+        customer.addRental(rental2);
+        customer.addRental(rental3);
+        String expectedStatement = "Rental record for " + customer.getName()  +"\n\t" + rental1.getMovie().getTitle()+"\t6.5\n"
+                + "\t" + rental2.getMovie().getTitle()+"\t15.0\n"
+                + "\t" + rental3.getMovie().getTitle()+"\t4.5\n"
+                + "Amount owed is 26.0\nYou earned 4 frequent renter points";
         assertEquals(expectedStatement, customer.statement());
-    }
 
-    @Test
-    public void testStatementForOneRentalWithChildrenAnd4DaysMovie() {
-        Rental rental = new Rental(new Movie("MP3", Movie.CHILDREN), 4);
-        customer.addRental(rental);
-        String expectedStatement = "Rental record for " + customer.getName()  +"\n\t" + rental.getMovie().getTitle()+"\t3.0\n"
-                + "Amount owed is 3.0\nYou earned 1 frequent renter points";
-        assertEquals(expectedStatement, customer.statement());
     }
 }
